@@ -32,9 +32,9 @@ const StoryGenerator: React.FC = () => {
 
     if (numberElement) numberElement.innerHTML = `Nr.<br>${number}`;
     if (smallTitleElement) smallTitleElement.textContent = smallTitle;
-    if (desc1Element) desc1Element.textContent = formattedDate;
-    if (desc2Element) desc2Element.textContent = desc2 + ` Uhr`;
-    if (desc3Element) desc3Element.textContent = desc3;
+    if (desc1Element) desc1Element.textContent = `📅 ` + formattedDate;
+    if (desc2Element) desc2Element.textContent = `🕑 ` + desc2 + ` Uhr`;
+    if (desc3Element) desc3Element.textContent = `👨‍🚒 ` + desc3;
   };
 
   const exportAsImage = () => {
