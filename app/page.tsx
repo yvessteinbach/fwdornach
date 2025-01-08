@@ -10,7 +10,7 @@ const StoryGenerator: React.FC = () => {
   const [desc1, setDesc1] = useState("");
   const [desc2, setDesc2] = useState("");
   const [desc3, setDesc3] = useState("");
-  const [background, setBackground] = useState("/images/tlf.jpg");
+  const [background, setBackground] = useState("https://images.unsplash.com/photo-1651672666659-b3af240c8afb?q=80&w=2902&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
 
   const updateText = () => {
     const numberElement = document.getElementById("number");
