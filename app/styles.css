@@ -27,7 +27,7 @@ body {
 .story-container {
     width: 1080px;
     height: 1280px;
-    background-color: #ffffff;
+    background-color: #0d0d0d;
     border-radius: 8px;
     border: 2px solid var(--border);
     transform: scale(0.5);
