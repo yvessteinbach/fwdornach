@@ -162,7 +162,7 @@ body {
     position: relative;
     float: left;
     height: 228px;
-    top: 0px;
+    top: -20px;
     left: 80px;
 
 }
@@ -217,6 +217,8 @@ body {
     outline: none;
     border: none;
     color: #E2E2E2;
+    display: flex;
+    align-items: center;
 }
 
 .einsatz__container .einsatz__trupp {
