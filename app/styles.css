@@ -1,0 +1,248 @@
+@import url('https://fonts.cdnfonts.com/css/stretch-pro');
+
+:root {
+    --background-primary: #F6F4F1;
+    --background-secondary: #E9E7E5;
+    --background-tertiary: #DBDAD8;
+
+    --border: #989691;
+    --button-background: #989691;
+    --button-background-hover: #7a7871;
+}
+
+body {
+    background: var(--background-primary);
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 16px 16px;
+    border-radius: 8px;
+    background-color: var(--background-secondary);
+}
+
+.story-container {
+    width: 1080px;
+    height: 1280px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    transform: scale(0.5);
+    margin: -450px -230px;
+}
+
+.story__container {
+    position: relative;
+}
+
+.input__container {
+    position: relative;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 50px;
+}
+
+.input__container .fwlogo {
+    height: auto;
+    width: 100px;
+    padding: 0 0 30px 0;
+}
+
+.input__container input {
+    transition: all 250ms;
+    max-width: 350px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 16px;
+    color: #5f5f5f;
+    text-decoration: none;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: var(--background-tertiary);
+}
+
+.input__container input:focus {
+    border: 1px solid var(--border);
+}
+
+.input__container textarea {
+    transition: all 250ms;
+    max-width: 350px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 16px;
+    color: #5f5f5f;
+    text-decoration: none;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: var(--background-tertiary);
+}
+
+.input__container textarea:focus {
+    border: 1px solid var(--border);
+}
+
+.input__container select {
+    transition: all 250ms;
+    max-width: 385px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 16px;
+    color: #5f5f5f;
+    text-decoration: none;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: var(--background-tertiary);
+}
+
+.input__container select:focus {
+    border: 1px solid var(--border);
+}
+
+.input__container button {
+    transition: all 250ms;
+    max-width: 385px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 16px;
+    color: var(--background-secondary);
+    text-decoration: none;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: var(--button-background);
+}
+
+.input__container button:hover {
+    cursor: pointer;
+    background: var(--button-background-hover);
+}
+
+.einsatz__nummer {
+    position: relative;
+    float: right;
+    height: 228px;
+    top: 75px;
+    right: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.einsatz__nummer .nummer {
+    z-index: 10;
+    position: absolute;
+    font-family: 'Stretch Pro', sans-serif;
+    font-size: 42px;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #fff;
+    margin-top: 35px;
+}
+
+.einsatz__nummer .bg {
+    height: 228px;
+}
+
+.einsatz__tag {
+    position: relative;
+    float: left;
+    height: 228px;
+    top: 40px;
+    left: 80px;
+
+}
+
+.einsatz__tag h1 {
+    margin-bottom: -110px;
+    font-family: 'Stretch Pro', sans-serif;
+    font-size: 160px;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+}
+
+.einsatz__container {
+    position: relative;
+    float: left;
+    max-width: 900px;
+    bottom: -550px;
+    left: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 36px;
+}
+
+.einsatz__container .einsatz__art {
+    font-family: 'Stretch Pro', sans-serif;
+    font-size: 80px;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+.einsatz__container .einsatz__datum {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+}
+
+.einsatz__container .einsatz__zeit {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+}
+
+.einsatz__container .einsatz__trupp {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    .container {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .story-container {
+        transform: scale(0.37);
+        margin: -585px -230px;
+    }
+
+    .input__container {
+        width: 350px;
+        margin: 25px 0 5px 0;
+    }
+}

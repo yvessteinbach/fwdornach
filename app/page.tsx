@@ -1,101 +1,129 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React, { useState } from "react";
+import html2canvas from "html2canvas";
+import "./styles.css";
+
+const StoryGenerator: React.FC = () => {
+  const [number, setNumber] = useState("");
+  const [smallTitle, setSmallTitle] = useState("Einsatzart auswählen");
+  const [desc1, setDesc1] = useState("");
+  const [desc2, setDesc2] = useState("");
+  const [desc3, setDesc3] = useState("");
+  const [background, setBackground] = useState("/assets/images/tlf.jpg");
+
+  const updateText = () => {
+    const numberElement = document.getElementById("number");
+    const smallTitleElement = document.getElementById("small-title");
+    const desc1Element = document.getElementById("desc1");
+    const desc2Element = document.getElementById("desc2");
+    const desc3Element = document.getElementById("desc3");
+
+    let formattedDate = desc1;
+    if (desc1) {
+      const date = new Date(desc1);
+      formattedDate = new Intl.DateTimeFormat("de-DE", {
+        weekday: "long",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }).format(date);
+    }
+
+    if (numberElement) numberElement.innerHTML = `Nr.<br>${number}`;
+    if (smallTitleElement) smallTitleElement.textContent = smallTitle;
+    if (desc1Element) desc1Element.textContent = formattedDate; // Set formatted date
+    if (desc2Element) desc2Element.textContent = desc2;
+    if (desc3Element) desc3Element.textContent = desc3;
+  };
+
+  const exportAsImage = () => {
+    const storyContainer = document.getElementById("story-container");
+    if (storyContainer) {
+      html2canvas(storyContainer).then((canvas) => {
+        const link = document.createElement("a");
+        link.download = `einsatz_${number || "default"}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <div className="container">
+      <div className="input__container">
+        <img className="fwlogo" src="/assets/images/logo.png" alt="" />
+        <input
+          type="number"
+          placeholder="Einsatznummer"
+          value={number}
+          onChange={(e) => setNumber(e.target.value)}
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+        <select
+          value={smallTitle}
+          onChange={(e) => setSmallTitle(e.target.value)}
+        >
+          <option value="Einsatzart auswählen">Einsatzart auswählen</option>
+          <option value="BRANDMELDE- ANLAGE">BRANDMELDEANLAGE</option>
+          <option value="ETC">ETC</option>
+        </select>
+        <input
+          type="date"
+          placeholder="Datum"
+          value={desc1}
+          onChange={(e) => setDesc1(e.target.value)}
+        ></input>
+        <input
+          type="time"
+          placeholder="Uhrzeit"
+          value={desc2}
+          onChange={(e) => setDesc2(e.target.value)}
+        ></input>
+        <textarea
+          placeholder="Einsatztrupp"
+          value={desc3}
+          onChange={(e) => setDesc3(e.target.value)}
+        ></textarea>
+        <select
+          onChange={(e) => setBackground(e.target.value)}
+          defaultValue="/assets/images/tlf.jpg"
+        >
+          <option value="/assets/images/tlf.jpg">Hintergrund auswählen</option>
+          <option value="/assets/images/bg1.png">TLF (BMA)</option>
+          <option value="/assets/images/bg2.png">ADL (Brand, Rettung)</option>
+        </select>
+        <button onClick={updateText}>Eingaben Aktualisieren</button>
+        <button onClick={exportAsImage}>Exportieren als PNG</button>
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <div className="story__container">
+        <div
+          id="story-container"
+          className="story-container"
+          style={{
+            backgroundImage: `url(${background})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="einsatz__nummer">
+            <div id="number" className="nummer"></div>
+            <img className="bg" src="/assets/images/nmbr_bg.png" alt="" />
+          </div>
+          <div className="einsatz__tag">
+            <h1>EIN-</h1>
+            <h1>SATZ</h1>
+          </div>
+          <div className="einsatz__container">
+            <div id="small-title" className="einsatz__art"></div>
+            <div id="desc1" className="einsatz__datum"></div>
+            <div id="desc2" className="einsatz__zeit"></div>
+            <div id="desc3" className="einsatz__trupp"></div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
-}
+};
+
+export default StoryGenerator;
