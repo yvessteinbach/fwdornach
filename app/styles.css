@@ -181,7 +181,7 @@ body {
     position: relative;
     float: left;
     max-width: 900px;
-    bottom: -550px;
+    bottom: -560px;
     left: 80px;
     display: flex;
     flex-direction: column;
