@@ -10,7 +10,7 @@ const StoryGenerator: React.FC = () => {
   const [desc1, setDesc1] = useState("");
   const [desc2, setDesc2] = useState("");
   const [desc3, setDesc3] = useState("");
-  const [background, setBackground] = useState("http://s994233628.onlinehome.us/cdn/tlf.png");
+  const [background, setBackground] = useState("/images/tlf.png");
 
   const updateText = () => {
     const numberElement = document.getElementById("number");
@@ -86,17 +86,17 @@ const StoryGenerator: React.FC = () => {
         ></textarea>
         <select
           onChange={(e) => setBackground(e.target.value)}
-          defaultValue="http://s994233628.onlinehome.us/cdn/tlf.png"
+          defaultValue="/images/tlf.png"
         >
-          <option value="http://s994233628.onlinehome.us/cdn/tlf.png">Hintergrund auswählen</option>
-          <option value="http://s994233628.onlinehome.us/cdn/tlf.png">TLF (BMA)</option>
-          <option value="http://s994233628.onlinehome.us/cdn/adl.png">ADL</option>
-          <option value="http://s994233628.onlinehome.us/cdn/rfz.png">RFZ</option>
-          <option value="http://s994233628.onlinehome.us/cdn/kowa.png">KOWA</option>
-          <option value="http://s994233628.onlinehome.us/cdn/vrf.png">VRF</option>
-          <option value="http://s994233628.onlinehome.us/cdn/mtf.png">MTF</option>
-          <option value="http://s994233628.onlinehome.us/cdn/mzf.png">MZF (Alt)</option>
-          <option value="http://s994233628.onlinehome.us/cdn/asf.png">ASF (Alt)</option>
+          <option value="/images/tlf.png">Hintergrund auswählen</option>
+          <option value="/images/tlf.png">TLF (BMA)</option>
+          <option value="/images/adl.png">ADL</option>
+          <option value="/images/rfz.png">RFZ</option>
+          <option value="/images/kowa.png">KOWA</option>
+          <option value="/images/vrf.png">VRF</option>
+          <option value="/images/mtf.png">MTF</option>
+          <option value="/images/mzf.png">MZF (Alt)</option>
+          <option value="/images/asf.png">ASF (Alt)</option>
         </select>
         <button onClick={updateText}>Eingaben Aktualisieren</button>
         <button onClick={exportAsImage}>Exportieren als PNG</button>
