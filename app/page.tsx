@@ -10,7 +10,7 @@ const StoryGenerator: React.FC = () => {
   const [desc1, setDesc1] = useState("");
   const [desc2, setDesc2] = useState("");
   const [desc3, setDesc3] = useState("");
-  const [background, setBackground] = useState("../public/assets/images/tlf.jpg");
+  const [background, setBackground] = useState("/images/tlf.jpg");
 
   const updateText = () => {
     const numberElement = document.getElementById("number");
