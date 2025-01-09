@@ -177,11 +177,22 @@ body {
     color: #FFFFFF;
 }
 
+.fwdornach__logo {
+    position: absolute;
+    right: 90px;
+    bottom: 60px;
+    float: right;
+}
+
+.fwdornach__logo img {
+    height: 150px;
+}
+
 .einsatz__container {
     position: relative;
     float: left;
     max-width: 900px;
-    bottom: -540px;
+    bottom: -450px;
     left: 80px;
     display: flex;
     flex-direction: column;
@@ -197,6 +208,16 @@ body {
     border: none;
     color: #FFFFFF;
     margin-bottom: 20px;
+}
+
+.einsatz__container .einsatz__standort {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
 }
 
 .einsatz__container .einsatz__datum {
@@ -240,7 +261,7 @@ body {
 
     .story-container {
         transform: scale(0.37);
-        margin: -585px -230px;
+        margin: -350px -230px;
     }
 
     .input__container {
