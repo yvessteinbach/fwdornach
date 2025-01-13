@@ -54,10 +54,97 @@ const StoryGenerator: React.FC = () => {
 
   return (
     <div className="container">
-      <h1>Einsatz</h1>
-      <a href="/einsatz">
-        <button>Get me there</button>
-      </a>
+      <div className="input__container">
+        <img className="fwlogo" src="/assets/images/logo.png" alt="" />
+        <input
+          type="number"
+          placeholder="Einsatznummer"
+          value={number}
+          onChange={(e) => setNumber(e.target.value)}
+        />
+        <select
+          value={smallTitle}
+          onChange={(e) => setSmallTitle(e.target.value)}
+        >
+          <option value="Einsatzart auswählen">Einsatzart auswählen</option>
+          <option value="BRANDMELDE- ANLAGE">BRANDMELDEANLAGE</option>
+          <option value="ETC">ETC</option>
+        </select>
+        <select
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        >
+          <option value="Einsatzort auswählen">Einsatzort auswählen</option>
+          <option value="Dornach">Dornach</option>
+          <option value="Hochwald">Hochwald</option>
+          <option value="Hochwald">Gempen</option>
+          <option value="Hochwald">Seewen</option>
+        </select>
+        <input
+          type="date"
+          placeholder="Datum"
+          value={desc1}
+          onChange={(e) => setDesc1(e.target.value)}
+        ></input>
+        <input
+          type="time"
+          placeholder="Uhrzeit"
+          value={desc2}
+          onChange={(e) => setDesc2(e.target.value)}
+        ></input>
+        <textarea
+          placeholder="Einsatztrupp"
+          value={desc3}
+          onChange={(e) => setDesc3(e.target.value)}
+        ></textarea>
+        <select
+          onChange={(e) => setBackground(e.target.value)}
+          defaultValue="/assets/images/tlf.png"
+        >
+          <option value="/assets/images/tlf.png">Hintergrund auswählen</option>
+          <option value="/assets/images/tlf.png">TLF (BMA)</option>
+          <option value="/assets/images/adl.png">ADL</option>
+          <option value="/assets/images/rfz.png">RFZ</option>
+          <option value="/assets/images/kowa.png">KOWA</option>
+          <option value="/assets/images/vrf.png">VRF</option>
+          <option value="/assets/images/mtf.png">MTF</option>
+          <option value="/assets/images/mzf.png">MZF (Alt)</option>
+          <option value="/assets/images/asf.png">ASF (Alt)</option>
+        </select>
+        <button onClick={updateText}>Eingaben Aktualisieren</button>
+        <button onClick={exportAsImage}>Exportieren als PNG</button>
+      </div>
+
+      <div className="story__container">
+        <div
+          id="story-container"
+          className="story-container"
+          style={{
+            backgroundImage: `url(${background})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="einsatz__nummer">
+            <div id="number" className="nummer"></div>
+            <img className="bg" src="/assets/images/nmbr_bg.png" alt="" />
+          </div>
+          <div className="einsatz__tag">
+            <h1>EIN-</h1>
+            <h1>SATZ</h1>
+          </div>
+          <div className="fwdornach__logo">
+            <img src="/assets/images/logo.png" alt="" />
+          </div>
+          <div className="einsatz__container">
+            <div id="small-title" className="einsatz__art"></div>
+            <div id="location" className="einsatz__standort"></div>
+            <div id="desc1" className="einsatz__datum"></div>
+            <div id="desc2" className="einsatz__zeit"></div>
+            <div id="desc3" className="einsatz__trupp"></div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
