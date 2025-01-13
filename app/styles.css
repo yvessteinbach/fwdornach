@@ -163,7 +163,7 @@ body {
     position: relative;
     float: left;
     height: 228px;
-    top: -30px;
+    top: 20px;
     left: 80px;
 
 }
@@ -179,10 +179,10 @@ body {
 }
 
 .fwdornach__logo {
-    position: absolute;
-    right: 90px;
-    bottom: 60px;
+    position: relative;
     float: right;
+    top: 1040px;
+    right: -70px;
 }
 
 .fwdornach__logo img {
@@ -192,9 +192,8 @@ body {
 .einsatz__container {
     position: relative;
     float: left;
-    max-width: 900px;
-    bottom: -880px;
-    left: -520px;
+    top: 630px;
+    left: 90px;
     display: flex;
     flex-direction: column;
     align-items: start;
