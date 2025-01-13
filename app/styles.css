@@ -8,6 +8,7 @@
     --border: #989691;
     --button-background: #989691;
     --button-background-hover: #7a7871;
+    font-variant-ligatures: none;
 }
 
 body {
@@ -192,8 +193,8 @@ body {
     position: relative;
     float: left;
     max-width: 900px;
-    bottom: -450px;
-    left: 80px;
+    bottom: -880px;
+    left: -520px;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -201,13 +202,16 @@ body {
 }
 
 .einsatz__container .einsatz__art {
+    position: absolute;
+    bottom: 370px;
+    float: left;
     font-family: 'Stretch Pro', sans-serif;
     font-size: 80px;
     text-decoration: none;
+    text-transform: uppercase;
     outline: none;
     border: none;
     color: #FFFFFF;
-    margin-bottom: 20px;
 }
 
 .einsatz__container .einsatz__standort {

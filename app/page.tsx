@@ -67,8 +67,23 @@ const StoryGenerator: React.FC = () => {
           onChange={(e) => setSmallTitle(e.target.value)}
         >
           <option value="Einsatzart auswählen">Einsatzart auswählen</option>
-          <option value="BRANDMELDE- ANLAGE">BRANDMELDEANLAGE</option>
-          <option value="ETC">ETC</option>
+          <option value="Gebäude- brand">Gebäudebrand</option>
+          <option value="Fahrzeug- brand">Fahrzeugbrand</option>
+          <option value="Wald- und Flurbrand">Wald- und Flurbrand</option>
+          <option value="Personen- rettung">Personenrettung</option>
+          <option value="Notfall- rettungsdienst">Notfallrettungsdienst</option>
+          <option value="Elemtar- ereignis">Elemtarereignis</option>
+          <option value="C&nbsp;Ereigniss">C-Ereigniss</option>
+          <option value="BC Ereigniss">BC-Ereigniss</option>
+          <option value="A Ereigniss">A-Ereigniss</option>
+          <option value="Pionier- einsatz">Pioniereinsatz</option>
+          <option value="Technische Hilfeleistung">Technische Hilfeleistung</option>
+          <option value="Bienen/Wespen">Bienen/Wespen</option>
+          <option value="Brandmelde- anlage">Brandmelde- anlage</option>
+          <option value="Falschalarm">Falschalarm</option>
+          <option value="Diverse Einsätze">Diverse Einsätze</option>
+          <option value="Verkehrs- regelung">Verkehrsregelung</option>
+          <option value="Saalwache">Saalwache</option>
         </select>
         <select
           value={location}
