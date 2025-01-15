@@ -163,9 +163,9 @@ body {
     position: relative;
     float: left;
     height: 228px;
-    top: -20px;
+    top: 30px;
     left: 80px;
-
+    font-variant-ligatures: none;
 }
 
 .einsatz__tag h1 {
@@ -176,6 +176,7 @@ body {
     outline: none;
     border: none;
     color: #FFFFFF;
+    font-variant-ligatures: none;
 }
 
 .fwdornach__logo {

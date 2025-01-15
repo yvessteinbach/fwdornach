@@ -71,15 +71,15 @@ const StoryGenerator: React.FC = () => {
           <option value="Fahrzeug- brand">Fahrzeugbrand</option>
           <option value="Wald- und Flurbrand">Wald- und Flurbrand</option>
           <option value="Personen- rettung">Personenrettung</option>
-          <option value="Notfall- rettungsdienst">Notfallrettungsdienst</option>
           <option value="Elemtar- ereignis">Elemtarereignis</option>
           <option value="C&nbsp;Ereigniss">C-Ereigniss</option>
-          <option value="BC Ereigniss">BC-Ereigniss</option>
-          <option value="A Ereigniss">A-Ereigniss</option>
+          <option value="BC&nbsp;Ereigniss">BC-Ereigniss</option>
+          <option value="A&nbsp;Ereigniss">A-Ereigniss</option>
           <option value="Pionier- einsatz">Pioniereinsatz</option>
           <option value="Technische Hilfeleistung">Technische Hilfeleistung</option>
-          <option value="Bienen/Wespen">Bienen/Wespen</option>
-          <option value="Brandmelde- anlage">Brandmelde- anlage</option>
+          <option value="Hilfeleistung Sanität">Hilfeleistung Sanität</option>
+          <option value="Bienen/ Wespen">Bienen/Wespen</option>
+          <option value="Brandmelde- anlage">Brandmeldeanlage</option>
           <option value="Falschalarm">Falschalarm</option>
           <option value="Diverse Einsätze">Diverse Einsätze</option>
           <option value="Verkehrs- regelung">Verkehrsregelung</option>
@@ -92,8 +92,8 @@ const StoryGenerator: React.FC = () => {
           <option value="Einsatzort auswählen">Einsatzort auswählen</option>
           <option value="Dornach">Dornach</option>
           <option value="Hochwald">Hochwald</option>
-          <option value="Hochwald">Gempen</option>
-          <option value="Hochwald">Seewen</option>
+          <option value="Gempen">Gempen</option>
+          <option value="Seewen">Seewen</option>
         </select>
         <input
           type="date"
