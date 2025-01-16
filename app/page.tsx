@@ -9,8 +9,6 @@ async function fetchData() {
 }
 
 export default async function HomePage() {
-  const data = await fetchData();
-
   return (
     <>
       <Header />
