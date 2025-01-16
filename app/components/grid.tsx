@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { gsap } from 'gsap';
+import React from 'react';
 
 type Einsatz = {
     number: number;
