@@ -1,0 +1,220 @@
+.create__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 8px;
+    grid-row-gap: 8px;
+}
+
+.create__side {
+    grid-area: 1 / 1 / 2 / 2;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 50px;
+    background: var(--background-dark-secondary);
+}
+
+.create__render {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.create__side input {
+    transition: all 200ms;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8425rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #ccc;
+    padding: 16px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    background: var(--background-dark-tertiary);
+}
+
+.create__side select {
+    transition: all 200ms;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8425rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #ccc;
+    padding: 16px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    background: var(--background-dark-tertiary);
+}
+
+.create__side textarea {
+    transition: all 200ms;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8425rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #ccc;
+    padding: 16px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    background: var(--background-dark-tertiary);
+}
+
+.render__container {
+    position: absolute;
+    top: -26%;
+    right: -238px;
+    transform: scale(0.5);
+    height: 1280px;
+    width: 1080px;
+}
+
+.render__container-wrapper {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.render__top {
+    position: relative;
+    height: 300px;
+    padding: 50px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.render__number {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    height: 300px;
+    width: 100%;
+}
+
+.render__number .number {
+    position: absolute;
+    top: 175px;
+    right: 100px;
+    font-family: 'Stretch Pro', sans-serif;
+    font-size: 42px;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #fff;
+    margin-top: 35px;
+}
+
+.render__title {
+    display: flex;
+    justify-content: start;
+    align-items: end;
+    height: 300px;
+    width: 100%;
+}
+
+.render__title div {
+    font-family: 'Stretch Pro', sans-serif;
+    font-size: 160px;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-variant-ligatures: none;
+    line-height: 0.8;
+}
+
+.render__bottom {
+    position: relative;
+    height: 300px;
+    padding: 50px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.render__logo {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    height: 200px;
+    width: 165px;
+    background-image: url("/assets/images/logo.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.render__text__container {
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: start;
+    gap: 16px;
+    height: 300px;
+    width: 100%;
+}
+
+.render__text__container .art {
+    font-family: 'Stretch Pro', sans-serif;
+    font-size: 80px;
+    text-decoration: none;
+    text-transform: uppercase;
+    outline: none;
+    border: none;
+    color: #fff;
+}
+
+.render__text__container .standort {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+}
+
+.render__text__container .datum {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+}
+
+.render__text__container .zeit {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+}
+
+.render__text__container .trupp {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+}
