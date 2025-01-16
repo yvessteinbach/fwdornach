@@ -48,7 +48,7 @@ export default function Header() {
     };
 
     const closeMenu = () => {
-        toggleMenu;
+        setMenuOpen(false);
     };
 
     useEffect(() => {
