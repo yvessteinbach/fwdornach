@@ -1,19 +1,23 @@
-// app/einsaetze/page.tsx
 import React from 'react';
-import Header from '../components/header';
 import Link from 'next/link';
+
+import Header from '../components/header';
+import Breadcrumb from '../components/breadcrumb';
 import Grid from '../components/grid';
-import { readEinsaetze } from './utils';
 
 export default async function EinsaetzePage() {
-    const einsaetze = await readEinsaetze();
     return (
         <>
             <Header />
-            <div className="main__container">
-                <Link className="button" href="/einsaetze/create">Einsatz erstellen</Link>
-                <Grid einsaetze={einsaetze} />
-            </div>
+            <div className="container">
+                <div className="side" style={{ backgroundImage: `linear-gradient(to right, rgba(13, 13, 13, 1), rgba(13, 13, 13, 0.15)), url("/assets/images/einsaetze_banner.jpg")` }}>
+                    <Breadcrumb />
+                    <div className="side__group">
+                        <Link className="button" href="/einsaetze/create">Einsatz erfassen</Link>
+                    </div>
+                </div>
+                <Grid />
+            </div >
         </>
     );
 }

@@ -2,9 +2,9 @@
     {
         "id": 1,
         "title": "Einsätze",
-        "description": "Erstelle neue Einsätze ganz einfach über das neue Tool.",
-        "link": "/",
-        "linkname": "Hier gehts zum Tool",
+        "description": "Erstelle Einsatz-Post's jetzt ganz einfach mit unserem neuen Tool.",
+        "link": "/einsaetze",
+        "linkname": "Zum Tool",
         "image": "/assets/images/image-1.jpg"
     },
     {

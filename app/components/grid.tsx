@@ -2,33 +2,66 @@
 
 import React from 'react';
 
-type Einsatz = {
-    number: number;
-    smallTitle: string;
-    desc1: string;
-    desc2: string;
-    desc3: string;
-    location: string;
-};
+const einsaetze = [
+    {
+        number: 1,
+        smallTitle: 'Gebäudebrand',
+        location: 'Dornach',
+        desc1: 'Donnerstag, 16.01.2025',
+        desc2: '15:30 Uhr',
+        desc3: 'Kommando, Einsatzgruppe 1'
+    },
+    {
+        number: 2,
+        smallTitle: 'Brandmeldeanlage',
+        location: 'Dornach',
+        desc1: 'Donnerstag, 16.01.2025',
+        desc2: '15:30 Uhr',
+        desc3: 'Kommando, Einsatzgruppe 1'
+    },
+    {
+        number: 3,
+        smallTitle: 'Hilfeleistung',
+        location: 'Dornach',
+        desc1: 'Donnerstag, 16.01.2025',
+        desc2: '15:30 Uhr',
+        desc3: 'Kommando, Einsatzgruppe 1'
+    },
+    {
+        number: 4,
+        smallTitle: 'Personentransport',
+        location: 'Dornach',
+        desc1: 'Donnerstag, 16.01.2025',
+        desc2: '15:30 Uhr',
+        desc3: 'Kommando, Einsatzgruppe 1'
+    },
+    {
+        number: 5,
+        smallTitle: 'Saalwache',
+        location: 'Dornach',
+        desc1: 'Donnerstag, 16.01.2025',
+        desc2: '15:30 Uhr',
+        desc3: 'Kommando, Einsatzgruppe 1'
+    },
+];
 
-export default function Grid({ einsaetze }: { einsaetze: Einsatz[] }) {
-
+export default function Grid() {
     return (
-        <>
-            <div className="grid">
-                {einsaetze.map((einsatz, index) => (
-                    <div className="grid__item" key={index}>
-                        <div className="grid__item__group">
-                            <div className="grid__item__nr">{einsatz.number}</div>
-                            <div className="grid__item__title">{einsatz.smallTitle}</div>
+        <div className="grid__container">
+            <div className="grid__row">
+                {einsaetze.map((einsatz) => (
+                    <div className="grid__item" key={einsatz.number}>
+                        <div className="grid__item-wrapper">
+                            <div className="item__nr">{einsatz.number}</div>
+                            <h3 className="item__smalltitle">{einsatz.smallTitle}</h3>
+                            <p className="item__location">{einsatz.location}</p>
+                            <p className="item__desc1">{einsatz.desc1}</p>
+                            <p className="item__desc2">{einsatz.desc2}</p>
+                            <p className="item__desc3">{einsatz.desc3}</p>
                         </div>
-                        <div className="grid__item__location">{einsatz.location}</div>
-                        <div className="grid__item__desc1">{einsatz.desc1}</div>
-                        <div className="grid__item__desc2">{einsatz.desc2}</div>
-                        <div className="grid__item__desc3">{einsatz.desc3}</div>
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 }

@@ -1,9 +1,17 @@
-import Header from '../components/header';
+import React from 'react';
 
-export default function statistiken() {
+import Header from '../components/header';
+import Breadcrumb from '../components/breadcrumb';
+
+export default async function StatistikenPage() {
     return (
         <>
             <Header />
+            <div className="container">
+                <div className="side">
+                    <Breadcrumb />
+                </div>
+            </div>
         </>
     );
 }
