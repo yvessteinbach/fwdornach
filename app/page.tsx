@@ -3,11 +3,6 @@ import Header from './components/header';
 import Card from './components/card';
 import cardData from './data/cards.json';
 
-async function fetchData() {
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts/1');
-  return response.json();
-}
-
 export default async function HomePage() {
   return (
     <>
