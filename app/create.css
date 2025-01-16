@@ -218,3 +218,14 @@
     border: none;
     color: #E2E2E2;
 }
+
+@media only screen and (max-width: 950px) {
+    .render__container {
+        position: absolute;
+        top: 55%;
+        right: -295px;
+        transform: scale(0.4);
+        height: 1280px;
+        width: 1080px;
+    }
+}
