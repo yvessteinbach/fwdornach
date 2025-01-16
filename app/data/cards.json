@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "title": "Einsätze",
+        "description": "Erstelle neue Einsätze ganz einfach über das neue Tool.",
+        "link": "/",
+        "linkname": "Hier gehts zum Tool",
+        "image": "/assets/images/splashscreen.jpg"
+    },
+    {
+        "id": 2,
+        "title": "Übungen",
+        "description": "übungen erstellen oder bearbeiten, ganz einfach über den 'Übungen' Tab",
+        "link": "/",
+        "linkname": "Zum Tab 'Übungen'",
+        "image": "/assets/images/img2.jpg"
+    },
+    {
+        "id": 3,
+        "title": "Statistiken",
+        "description": "Siehe Statistiken über die Einsätze und Übungen.",
+        "link": "/",
+        "linkname": "Gehe zu Statistiken",
+        "image": "/assets/images/img3.jpg"
+    }
+]

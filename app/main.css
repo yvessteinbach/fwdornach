@@ -1,0 +1,374 @@
+@import url('https://fonts.cdnfonts.com/css/stretch-pro');
+
+:root {
+    --background-primary: #F6F4F1;
+    --background-secondary: #E9E7E5;
+    --background-tertiary: #DBDAD8;
+
+    --background-dark-primary: #0D0D0D;
+    --background-dark-secondary: #242424;
+    --background-dark-tertiary: #2F2F2F;
+
+    --text-dark-primary: #FFFFFF;
+    --text-dark-secondary: #CCCCCC;
+
+    --border: #989691;
+    --button-background: #989691;
+    --button-background-hover: #7a7871;
+
+    font-variant-ligatures: none;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background: var(--background-dark-primary);
+    color: #ccc;
+}
+
+.button {
+    transition: all 200ms ease-in-out;
+    outline: none;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8425rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #000;
+    padding: 16px 32px;
+    border-radius: 100px;
+    background: var(--background-primary);
+}
+
+.button:hover {
+    cursor: pointer;
+    background: var(--background-tertiary);
+}
+
+.container {
+    margin: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    background-color: var(--background-dark-secondary);
+}
+
+.story-container {
+    width: 1080px;
+    height: 1280px;
+    background-color: #0d0d0d;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    transform: scale(0.5);
+    margin: -450px -230px;
+}
+
+.story__container {
+    position: relative;
+}
+
+.input__container {
+    position: relative;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 50px;
+}
+
+.input__container .fwlogo {
+    height: auto;
+    width: 100px;
+    padding: 0 0 30px 0;
+}
+
+.input__container input {
+    transition: all 250ms;
+    max-width: 350px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 16px;
+    color: #5f5f5f;
+    text-decoration: none;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: var(--background-tertiary);
+}
+
+.input__container input:focus {
+    border: 1px solid var(--border);
+}
+
+.input__container textarea {
+    transition: all 250ms;
+    max-width: 350px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 16px;
+    color: #5f5f5f;
+    text-decoration: none;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: var(--background-tertiary);
+}
+
+.input__container textarea:focus {
+    border: 1px solid var(--border);
+}
+
+.input__container select {
+    transition: all 250ms;
+    max-width: 385px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 16px;
+    color: #5f5f5f;
+    text-decoration: none;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: var(--background-tertiary);
+}
+
+.input__container select:focus {
+    border: 1px solid var(--border);
+}
+
+.einsatz__nummer {
+    position: relative;
+    float: right;
+    height: 228px;
+    top: 75px;
+    right: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.einsatz__nummer .nummer {
+    z-index: 10;
+    position: absolute;
+    font-family: 'Stretch Pro', sans-serif;
+    font-size: 42px;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #fff;
+    margin-top: 35px;
+}
+
+.einsatz__nummer .bg {
+    height: 228px;
+}
+
+.einsatz__tag {
+    position: relative;
+    float: left;
+    height: 228px;
+    top: -20px;
+    left: 80px;
+
+}
+
+.einsatz__tag h1 {
+    margin-bottom: -110px;
+    font-family: 'Stretch Pro', sans-serif;
+    font-size: 160px;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+}
+
+.fwdornach__logo {
+    position: relative;
+    float: right;
+    top: 1040px;
+    right: -70px;
+}
+
+.fwdornach__logo img {
+    height: 150px;
+}
+
+.einsatz__container {
+    position: relative;
+    float: left;
+    top: 630px;
+    left: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 36px;
+}
+
+.einsatz__container .einsatz__art {
+    position: absolute;
+    bottom: 370px;
+    float: left;
+    font-family: 'Stretch Pro', sans-serif;
+    font-size: 80px;
+    text-decoration: none;
+    text-transform: uppercase;
+    outline: none;
+    border: none;
+    color: #FFFFFF;
+}
+
+.einsatz__container .einsatz__standort {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+}
+
+.einsatz__container .einsatz__datum {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+}
+
+.einsatz__container .einsatz__zeit {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+    display: flex;
+    align-items: center;
+}
+
+.einsatz__container .einsatz__trupp {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    color: #E2E2E2;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    .container {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .story-container {
+        transform: scale(0.37);
+        margin: -350px -230px;
+    }
+
+    .input__container {
+        width: 350px;
+        margin: 25px 0 5px 0;
+    }
+}
+
+.main__container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    gap: 32px;
+    margin: 64px 32px 32px 32px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--background-dark);
+}
+
+.card {
+    position: relative;
+    height: 650px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card__overlay {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.card .card__overlay .card__title {
+    outline: none;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.8425rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #fff;
+}
+
+.card .card__overlay .card__description {
+    outline: none;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.8425rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #ccc;
+}
+
+.card .card__overlay .card__cta button {
+    transition: all 200ms ease-in-out;
+    outline: none;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8425rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #000;
+    padding: 16px 32px;
+    border-radius: 100px;
+    background: var(--background-primary);
+}
+
+.card .card__overlay .card__cta button:hover {
+    cursor: pointer;
+    background: var(--background-tertiary);
+}
+
+.background__splash {
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    background-color: #0d0d0d;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.75)), url("/assets/images/splashscreen.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.grid__container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 64px 32px 32px 32px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+}
