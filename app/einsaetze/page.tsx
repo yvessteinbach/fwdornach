@@ -7,7 +7,6 @@ import { readEinsaetze } from './utils';
 
 export default async function EinsaetzePage() {
     const einsaetze = await readEinsaetze();
-
     return (
         <>
             <Header />
