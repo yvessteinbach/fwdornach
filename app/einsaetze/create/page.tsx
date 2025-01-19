@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import html2canvas from "html2canvas";
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { getApp } from 'firebase/app';
+import Image from 'next/image';
 
 import Breadcrumb from '../../components/breadcrumb';
 
@@ -167,7 +168,14 @@ export default function EinsaetzePage() {
                                     </div>
                                     <div className="render__number">
                                         <div id="number" className="number"></div>
-                                        <img className="bg" src="/assets/images/nmbr_bg.png" alt="" />
+                                        <Image
+                                            className="bg"
+                                            src="/assets/images/nmbr_bg.png"
+                                            alt="Background"
+                                            width={500}
+                                            height={500}
+                                            priority
+                                        />
                                     </div>
                                 </div>
                                 <div className="render__bottom">
