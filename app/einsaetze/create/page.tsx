@@ -2,11 +2,14 @@
 
 import React, { useState } from "react";
 import html2canvas from "html2canvas";
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getApp } from 'firebase/app';
 
-import Header from '../../components/header';
 import Breadcrumb from '../../components/breadcrumb';
 
 export default function EinsaetzePage() {
+
+    const db = getFirestore(getApp());
 
     const [number, setNumber] = useState("");
     const [smallTitle, setSmallTitle] = useState("");
@@ -43,21 +46,41 @@ export default function EinsaetzePage() {
         if (desc3Element) desc3Element.textContent = `👨‍🚒 ` + desc3;
     };
 
-    const exportAsImage = () => {
+    const exportAsImage = async () => {
         const storyContainer = document.getElementById("render__container");
-        if (storyContainer) {
-            html2canvas(storyContainer).then((canvas) => {
-                const link = document.createElement("a");
-                link.download = `einsatz_${number || "default"}.png`;
-                link.href = canvas.toDataURL();
-                link.click();
+        if (!storyContainer) {
+            console.error("Render container not found");
+            return;
+        }
+
+        try {
+            const canvas = await html2canvas(storyContainer);
+
+            const link = document.createElement("a");
+            link.download = `einsatz_${number || "default"}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+
+            const db = getFirestore(getApp()); // Get Firestore instance
+            const docRef = await addDoc(collection(db, "einsaetze"), {
+                number,         // Save 'number'
+                smallTitle,     // Save 'smallTitle'
+                desc1,          // Save 'desc1'
+                desc2,          // Save 'desc2'
+                desc3,          // Save 'desc3'
+                location,       // Save 'location'
+                background,     // Save 'background'
+                timestamp: new Date().toISOString(), // Save timestamp
             });
+
+            console.log("Document written with ID:", docRef.id);
+        } catch (error) {
+            console.error("Error exporting or saving the canvas:", error);
         }
     };
 
     return (
         <>
-            <Header />
             <div className="container">
                 <div className="side">
                     <Breadcrumb />

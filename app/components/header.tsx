@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 
+import LogoutButton from './logoutbutton';
+
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuContainerRef = useRef<HTMLDivElement>(null);
@@ -104,6 +106,7 @@ export default function Header() {
                             </svg>
                         </button>
                     </form>
+                    <LogoutButton />
                 </div>
             </div>
             <div className="menu__navigation">

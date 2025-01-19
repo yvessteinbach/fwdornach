@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import html2canvas from "html2canvas";
 
-import Header from '../../components/header';
 import Breadcrumb from '../../components/breadcrumb';
 
 export default function EinsaetzePage() {
@@ -57,7 +56,6 @@ export default function EinsaetzePage() {
 
     return (
         <>
-            <Header />
             <div className="container">
                 <div className="side">
                     <Breadcrumb />
