@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '../lib/firebase'; // Ensure this is the correct Firebase configuration
-import type { User } from 'firebase/auth'; // Import the User type from Firebase
+import type { User } from 'firebase/auth';
 import Header from './components/header';
 
 import './main.css';
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
+  const [_user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {

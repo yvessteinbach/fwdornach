@@ -9,8 +9,6 @@ import Breadcrumb from '../../components/breadcrumb';
 
 export default function EinsaetzePage() {
 
-    const db = getFirestore(getApp());
-
     const [number, setNumber] = useState("");
     const [smallTitle, setSmallTitle] = useState("");
     const [desc1, setDesc1] = useState("");
