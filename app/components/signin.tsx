@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
@@ -18,13 +17,12 @@ export default function SignIn() {
 
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-            const idToken = await userCredential.user.getIdToken();
-            Cookies.set('authToken', idToken, { expires: 1 });
-
+            console.log('User signed in:', userCredential.user);
             router.push('/');
-        } catch (error: any) {
-            setError(error.message);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError(error.message);
+            }
         }
     };
 

@@ -1,6 +1,5 @@
 'use client';
 
-import type { Metadata } from 'next';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '../lib/firebase'; // Ensure this is the correct Firebase configuration

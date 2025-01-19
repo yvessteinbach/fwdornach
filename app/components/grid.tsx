@@ -4,12 +4,23 @@ import React, { useState, useEffect } from 'react';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { getApp } from 'firebase/app';
 
+interface GridItem {
+    id: string;
+    number: string;
+    smallTitle: string;
+    desc1: string;
+    desc2: string;
+    desc3: string;
+    location: string;
+    background: string;
+}
+
 interface GridProps {
     collectionName: string;
 }
 
 export default function Grid({ collectionName }: GridProps) {
-    const [data, setData] = useState<any[]>([]);
+    const [data, setData] = useState<GridItem[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -20,7 +31,7 @@ export default function Grid({ collectionName }: GridProps) {
                 const fetchedData = querySnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),
-                }));
+                })) as GridItem[];
                 setData(fetchedData);
             } catch (error) {
                 console.error('Error fetching data:', error);
