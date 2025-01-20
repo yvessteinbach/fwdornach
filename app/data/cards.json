@@ -10,17 +10,17 @@
     {
         "id": 2,
         "title": "Übungen",
-        "description": "übungen erstellen oder bearbeiten, ganz einfach über den 'Übungen' Tab",
+        "description": "Übungs-Post's erstellen geht jetzt ganz einfach mit unserem neuen Tool.",
         "link": "/",
-        "linkname": "Zum Tab 'Übungen'",
+        "linkname": "Zum Tool",
         "image": "/assets/images/image-2.jpg"
     },
     {
         "id": 3,
         "title": "Statistiken",
-        "description": "Siehe Statistiken über die Einsätze und Übungen.",
+        "description": "Erhalte Statistiken zu Einsätzen und Übungen.",
         "link": "/",
-        "linkname": "Gehe zu Statistiken",
+        "linkname": "Statistiken ansehen",
         "image": "/assets/images/image-3.jpg"
     }
 ]

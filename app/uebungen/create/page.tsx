@@ -2,30 +2,38 @@
 
 import React, { useState } from "react";
 import html2canvas from "html2canvas";
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getApp } from 'firebase/app';
 
 import Breadcrumb from '../../components/breadcrumb';
 
-export default function EinsaetzePage() {
+export default function UebungenPage() {
 
     const [number, setNumber] = useState("");
-    const [smallTitle, setSmallTitle] = useState("");
-    const [desc1, setDesc1] = useState("");
-    const [desc2, setDesc2] = useState("");
-    const [desc3, setDesc3] = useState("");
-    const [location, setLocation] = useState("");
-    const [background, setBackground] = useState("/assets/images/tlf.png");
+    const [title, setTitle] = useState("");
+    const [date1, setDate] = useState("");
+    const [time, setTime] = useState("");
+    const [background, setBackground] = useState<string>("/assets/images/tlf.png");
+
+    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setBackground(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const updateText = () => {
-        const numberElement = document.getElementById("number");
-        const smallTitleElement = document.getElementById("small-title");
-        const locationElement = document.getElementById("location");
-        const desc1Element = document.getElementById("desc1");
-        const desc2Element = document.getElementById("desc2");
-        const desc3Element = document.getElementById("desc3");
+        const titleElement = document.getElementById("title");
+        const dateElement = document.getElementById("date1");
+        const timeElement = document.getElementById("time");
 
-        let formattedDate = desc1;
-        if (desc1) {
-            const date = new Date(desc1);
+        let formattedDate = date1;
+        if (date1) {
+            const date = new Date(date1);
             formattedDate = new Intl.DateTimeFormat("de-DE", {
                 weekday: "long",
                 day: "2-digit",
@@ -34,23 +42,39 @@ export default function EinsaetzePage() {
             }).format(date);
         }
 
-        if (numberElement) numberElement.innerHTML = `Nr.<br>${number}`;
-        if (smallTitleElement) smallTitleElement.textContent = smallTitle;
-        if (locationElement) locationElement.textContent = `🌎 ` + location;
-        if (desc1Element) desc1Element.textContent = `📅 ` + formattedDate;
-        if (desc2Element) desc2Element.textContent = `🕑 ` + desc2 + ` Uhr`;
-        if (desc3Element) desc3Element.textContent = `👨‍🚒 ` + desc3;
+        if (titleElement) titleElement.textContent = title;
+        if (dateElement) dateElement.textContent = formattedDate;
+        if (timeElement) timeElement.textContent = time + ` Uhr`;
     };
 
-    const exportAsImage = () => {
+    const exportAsImage = async () => {
         const storyContainer = document.getElementById("render__container");
-        if (storyContainer) {
-            html2canvas(storyContainer).then((canvas) => {
-                const link = document.createElement("a");
-                link.download = `einsatz_${number || "default"}.png`;
-                link.href = canvas.toDataURL();
-                link.click();
+        if (!storyContainer) {
+            console.error("Render container not found");
+            return;
+        }
+
+        try {
+            const canvas = await html2canvas(storyContainer);
+
+            const link = document.createElement("a");
+            link.download = `einsatz_${number || "default"}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+
+            const db = getFirestore(getApp());
+            const docRef = await addDoc(collection(db, "uebungen"), {
+                number,
+                title,
+                date1,
+                time,
+                background,
+                timestamp: new Date().toISOString(),
             });
+
+            console.log("Document written with ID:", docRef.id);
+        } catch (error) {
+            console.error("Error exporting or saving the canvas:", error);
         }
     };
 
@@ -64,97 +88,68 @@ export default function EinsaetzePage() {
                     <div className="create__side">
                         <input
                             type="number"
-                            placeholder="Einsatznummer"
+                            placeholder="Übungsnummer"
                             value={number}
                             onChange={(e) => setNumber(e.target.value)}
                         />
-                        <select
-                            value={smallTitle}
-                            onChange={(e) => setSmallTitle(e.target.value)}
-                        >
-                            <option value="Einsatzart auswählen">Einsatzart auswählen</option>
-                            <option value="Gebäude- brand">Gebäudebrand</option>
-                            <option value="Fahrzeug- brand">Fahrzeugbrand</option>
-                            <option value="Wald- und Flurbrand">Wald- und Flurbrand</option>
-                            <option value="Personen- rettung">Personenrettung</option>
-                            <option value="Notfall- rettungsdienst">Notfallrettungsdienst</option>
-                            <option value="Elemtar- ereignis">Elemtarereignis</option>
-                            <option value="C&nbsp;Ereigniss">C-Ereigniss</option>
-                            <option value="BC Ereigniss">BC-Ereigniss</option>
-                            <option value="A Ereigniss">A-Ereigniss</option>
-                            <option value="Pionier- einsatz">Pioniereinsatz</option>
-                            <option value="Technische Hilfeleistung">Technische Hilfeleistung</option>
-                            <option value="Bienen/Wespen">Bienen/Wespen</option>
-                            <option value="Brandmelde- anlage">Brandmelde- anlage</option>
-                            <option value="Falschalarm">Falschalarm</option>
-                            <option value="Diverse Einsätze">Diverse Einsätze</option>
-                            <option value="Verkehrs- regelung">Verkehrsregelung</option>
-                            <option value="Saalwache">Saalwache</option>
-                        </select>
-                        <select
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                        >
-                            <option value="Einsatzort auswählen">Einsatzort auswählen</option>
-                            <option value="Dornach">Dornach</option>
-                            <option value="Hochwald">Hochwald</option>
-                            <option value="Hochwald">Gempen</option>
-                            <option value="Hochwald">Seewen</option>
-                        </select>
+                        <textarea
+                            placeholder="Übungsart"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        ></textarea>
                         <input
                             type="date"
                             placeholder="Datum"
-                            value={desc1}
-                            onChange={(e) => setDesc1(e.target.value)}
+                            value={date1}
+                            onChange={(e) => setDate(e.target.value)}
                         ></input>
                         <input
                             type="time"
                             placeholder="Uhrzeit"
-                            value={desc2}
-                            onChange={(e) => setDesc2(e.target.value)}
+                            value={time}
+                            onChange={(e) => setTime(e.target.value)}
                         ></input>
-                        <textarea
-                            placeholder="Einsatztrupp"
-                            value={desc3}
-                            onChange={(e) => setDesc3(e.target.value)}
-                        ></textarea>
-                        <select
-                            onChange={(e) => setBackground(e.target.value)}
-                            defaultValue="/assets/images/tlf.png"
-                        >
-                            <option value="/assets/images/tlf.png">Hintergrund auswählen</option>
-                            <option value="/assets/images/tlf.png">TLF (BMA)</option>
-                            <option value="/assets/images/adl.png">ADL</option>
-                            <option value="/assets/images/rfz.png">RFZ</option>
-                            <option value="/assets/images/kowa.png">KOWA</option>
-                            <option value="/assets/images/vrf.png">VRF</option>
-                            <option value="/assets/images/mtf.png">MTF</option>
-                            <option value="/assets/images/mzf.png">MZF (Alt)</option>
-                            <option value="/assets/images/asf.png">ASF (Alt)</option>
-                        </select>
+                        <input
+                            id="imageUpload"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                        />
                         <button className="button" onClick={updateText}>Eingaben Aktualisieren</button>
                         <button className="button" onClick={exportAsImage}>Exportieren als PNG</button>
                     </div>
                     <div className="create__render">
                         <div id="render__container" className="render__container" style={{ backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center", }}>
                             <div className="render__container-wrapper">
-                                <div className="render__top">
-                                    <div className="render__title">
-                                        <div>EIN-<br />SATZ</div>
-                                    </div>
-                                    <div className="render__number">
-                                        <div id="number" className="number"></div>
-                                        <img className="bg" src="/assets/images/nmbr_bg.png" alt="" />
+                                <div className="render2__top">
+                                    <div className="render2__logo"></div>
+                                    <div className="render2__date">
+                                        <div id="date1" className="bubble"></div>
                                     </div>
                                 </div>
-                                <div className="render__bottom">
-                                    <div className="render__logo"></div>
+                                <div className="render2__bottom">
                                     <div className="render__text__container">
-                                        <div id="small-title" className="art"></div>
-                                        <div id="location" className="standort"></div>
-                                        <div id="desc1" className="datum"></div>
-                                        <div id="desc2" className="zeit"></div>
-                                        <div id="desc3" className="trupp"></div>
+                                        <div className="render2__tag">
+                                            <div className="bubble">
+                                                <div className="text">IMPRESSIONEN</div>
+                                                <div className="chev one">
+                                                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </div>
+                                                <div className="chev two">
+                                                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </div>
+                                                <div className="chev three">
+                                                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="title" className="render2__title"></div>
                                     </div>
                                 </div>
                             </div>

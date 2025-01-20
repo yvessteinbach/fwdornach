@@ -11,7 +11,6 @@
 
 .grid__item {
     position: relative;
-    height: 250px;
     width: 250px;
     flex-basis: 20%;
     -ms-flex: auto;
