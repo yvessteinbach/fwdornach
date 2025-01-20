@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie'; // For managing cookies
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
@@ -17,7 +18,15 @@ export default function SignIn() {
 
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log('User signed in:', userCredential.user);
+            const user = userCredential.user;
+
+            // Retrieve the auth token from Firebase
+            const token = await user.getIdToken();
+
+            // Set the auth token as a cookie
+            Cookies.set('authToken', token, { expires: 1 }); // 1 day expiration
+
+            console.log('User signed in:', user);
             router.push('/');
         } catch (error: unknown) {
             if (error instanceof Error) {
