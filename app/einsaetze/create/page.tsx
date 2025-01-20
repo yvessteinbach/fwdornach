@@ -108,8 +108,9 @@ export default function EinsaetzePage() {
                             <option value="A Ereigniss">A-Ereigniss</option>
                             <option value="Pionier- einsatz">Pioniereinsatz</option>
                             <option value="Technische Hilfeleistung">Technische Hilfeleistung</option>
+                            <option value="Hilfeleistung Sanität">Hilfeleistung Sanität</option>
                             <option value="Bienen/Wespen">Bienen/Wespen</option>
-                            <option value="Brandmelde- anlage">Brandmelde- anlage</option>
+                            <option value="Brandmelde- anlage">Brandmeldeanlage</option>
                             <option value="Falschalarm">Falschalarm</option>
                             <option value="Diverse Einsätze">Diverse Einsätze</option>
                             <option value="Verkehrs- regelung">Verkehrsregelung</option>
@@ -172,8 +173,8 @@ export default function EinsaetzePage() {
                                             className="bg"
                                             src="/assets/images/nmbr_bg.png"
                                             alt="Background"
-                                            width={500}
-                                            height={500}
+                                            width={179}
+                                            height={228}
                                             priority
                                         />
                                     </div>

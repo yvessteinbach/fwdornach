@@ -52,19 +52,21 @@ export default function Grid({ collectionName }: GridProps) {
     }
 
     return (
-        <div className="grid-container">
-            {data.map((item) => (
-                <div className="grid__item" key={item.id}>
-                    <div className="grid__item-wrapper">
-                        <div className="item__nr">{item.number}</div>
-                        <h3 className="item__smalltitle">{item.smallTitle}</h3>
-                        <p className="item__location">{item.location}</p>
-                        <p className="item__desc1">{item.desc1}</p>
-                        <p className="item__desc2">{item.desc2}</p>
-                        <p className="item__desc3">{item.desc3}</p>
+        <div className="grid__container">
+            <div className="grid__row">
+                {data.map((item) => (
+                    <div className="grid__item" key={item.id}>
+                        <div className="grid__item-wrapper">
+                            <div className="item__nr">{item.number}</div>
+                            <h3 className="item__smalltitle">{item.smallTitle}</h3>
+                            <p className="item__location">{item.location}</p>
+                            <p className="item__desc1">{item.desc1}</p>
+                            <p className="item__desc2">{item.desc2}</p>
+                            <p className="item__desc3">{item.desc3}</p>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
         </div>
     );
 }
