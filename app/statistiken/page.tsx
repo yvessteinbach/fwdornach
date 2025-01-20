@@ -38,7 +38,7 @@ export default function StatsPage() {
                 {loading ? (
                     <Loading />
                 ) : docCount !== null ? (
-                    <p>Total documents in the "Einsätze" collection: {docCount}</p>
+                    <p>Total documents in the &quot;Einsätze&quot; collection: {docCount}</p>
                 ) : (
                     <p>Failed to load data. Please try again.</p>
                 )}
