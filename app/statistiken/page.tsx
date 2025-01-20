@@ -39,7 +39,6 @@ export default function StatsPage() {
         fetchDocumentCounts();
     }, []);
 
-    // Calculate total count
     const totalCount = (einsaetzeCount ?? 0) + (uebungenCount ?? 0);
 
     return (
@@ -56,7 +55,7 @@ export default function StatsPage() {
                             <div className="grid__row">
                                 <div className="grid__item">
                                     <div className="grid__item-wrapper">
-                                        <div className="item__nr">Anzahl Post's</div>
+                                        <div className="item__nr">Anzahl Post&apos;s</div>
                                         <h3 className="item__smalltitle">{totalCount}</h3>
                                     </div>
                                 </div>
