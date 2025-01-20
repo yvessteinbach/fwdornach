@@ -38,9 +38,43 @@ export default function StatsPage() {
                 {loading ? (
                     <Loading />
                 ) : docCount !== null ? (
-                    <p>Total documents in the &quot;Einsätze&quot; collection: {docCount}</p>
+                    <>
+                        <div className="container">
+                            Test
+                        </div>
+                    </>
                 ) : (
-                    <p>Failed to load data. Please try again.</p>
+                    <div className="grid__container">
+                        <div className="grid__row">
+                            <div className="grid__item">
+                                <div className="grid__item-wrapper">
+                                    <div className="item__nr">Anzahl Post's</div>
+                                    <h3 className="item__smalltitle">{docCount}</h3>
+                                </div>
+                            </div>
+
+                            <div className="grid__item">
+                                <div className="grid__item-wrapper">
+                                    <div className="item__nr">Anzahl Einsätze</div>
+                                    <h3 className="item__smalltitle">{docCount}</h3>
+                                </div>
+                            </div>
+
+                            <div className="grid__item">
+                                <div className="grid__item-wrapper">
+                                    <div className="item__nr">Anzahl Übungen</div>
+                                    <h3 className="item__smalltitle">{docCount}</h3>
+                                </div>
+                            </div>
+
+                            <div className="grid__item">
+                                <div className="grid__item-wrapper">
+                                    <div className="item__nr">Top Einsatzkategorie</div>
+                                    <h3 className="item__smalltitle">{docCount}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 )}
             </div>
         </>
