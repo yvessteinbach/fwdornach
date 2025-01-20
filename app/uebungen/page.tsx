@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 import Breadcrumb from '../components/breadcrumb';
+import Grid from '../components/grid';
 
 export default async function UebungenPage() {
     return (
@@ -13,6 +14,7 @@ export default async function UebungenPage() {
                         <Link className="button" href="/uebungen/create">Übung erfassen</Link>
                     </div>
                 </div>
+                <Grid collectionName="uebungen" />
             </div>
         </>
     );
