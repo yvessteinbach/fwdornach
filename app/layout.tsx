@@ -2,10 +2,10 @@
 
 import Header from './components/header';
 
-import './main.css';
-import './header.css';
-import './grid.css';
-import './create.css';
+import './css/main.css';
+import './css/header.css';
+import './css/grid.css';
+import './css/create.css';
 
 export default function RootLayout({
   children,

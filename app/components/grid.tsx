@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { getApp } from 'firebase/app';
+import Loading from './loading';
 
 interface GridItem {
     id: string;
@@ -44,10 +45,7 @@ export default function Grid({ collectionName }: GridProps) {
     }, [collectionName]);
 
     if (loading) {
-        return <div className="lds-ripple">
-            <div></div>
-            <div></div>
-        </div>;
+        return <Loading />;
     }
 
     if (data.length === 0) {
