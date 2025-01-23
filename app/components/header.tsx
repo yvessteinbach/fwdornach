@@ -110,6 +110,7 @@ export default function Header() {
                 </div>
             </div>
             <div className="menu__navigation">
+                <img src="/assets/images/logo.png" alt="" className="menu__logo" />
                 <div className="menu__icon" onClick={toggleMenu}>
                     <div className={`bar ${menuOpen ? 'bar-transform-top' : ''}`}></div>
                     <div className={`bar ${menuOpen ? 'bar-transform-bottom' : ''}`}></div>

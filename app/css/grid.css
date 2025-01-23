@@ -37,7 +37,25 @@
     background: var(--background-dark-secondary);
 }
 
+.einsatz {
+    background: #301111;
+}
+
+.uebung {
+    background: #112030;
+}
+
 .item__nr {
+    outline: none;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #fff;
+}
+
+.item__nr__small {
     outline: none;
     border: none;
     font-family: Arial, Helvetica, sans-serif;
@@ -95,6 +113,47 @@
     font-weight: 500;
     text-decoration: none;
     color: #ccc;
+}
+
+.item__delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 16px;
+}
+
+.stat {
+    color: #9f9f9f !important;
+}
+
+.color {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.color__item .text {
+    padding: 8px;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8425rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #ccc;
+}
+
+.color__item .gray {
+    background: var(--background-dark-secondary);
+}
+
+.color__item .red {
+    background: #301111;
+}
+
+.color__item .blue {
+    background: #112030;
 }
 
 @media(max-width: 1333px) {

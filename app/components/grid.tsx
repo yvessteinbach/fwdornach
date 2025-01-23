@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { getApp } from 'firebase/app';
 import Loading from './loading';
 
@@ -44,6 +44,16 @@ export default function Grid({ collectionName }: GridProps) {
         fetchData();
     }, [collectionName]);
 
+    const deleteItem = async (id: string) => {
+        try {
+            const db = getFirestore(getApp());
+            await deleteDoc(doc(db, collectionName, id)); // Delete the document by ID
+            setData((prevData) => prevData.filter((item) => item.id !== id)); // Update local state
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
+
     if (loading) {
         return <Loading />;
     }
@@ -64,6 +74,7 @@ export default function Grid({ collectionName }: GridProps) {
                             <p className="item__desc1">{item.desc1}</p>
                             <p className="item__desc2">{item.desc2}</p>
                             <p className="item__desc3">{item.desc3}</p>
+                            <button className="item__delete button" onClick={() => deleteItem(item.id)}>Delete</button>
                         </div>
                     </div>
                 ))}

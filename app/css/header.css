@@ -183,6 +183,12 @@
     opacity: 0;
 }
 
+.menu__logo {
+    position: absolute;
+    left: 32px;
+    height: 40px;
+}
+
 .menu__links {
     display: flex;
     flex-direction: column;
