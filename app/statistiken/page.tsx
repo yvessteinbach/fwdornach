@@ -8,9 +8,9 @@ import Breadcrumb from '../components/breadcrumb';
 import Loading from '../components/loading';
 
 interface Einsatz {
+    id?: string; // Optional if needed
     smallTitle: string; // Category
     desc2: string; // Time
-    [key: string]: any; // Allow other properties
 }
 
 export default function StatsPage() {
