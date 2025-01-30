@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { gsap } from 'gsap';
 
 import LogoutButton from './logoutbutton';
+import { useAuth } from '../../context/AuthContext'; // Import useAuth to check authentication
 
 export default function Header() {
+    const { user } = useAuth(); // Get user authentication state
     const [menuOpen, setMenuOpen] = useState(false);
     const menuContainerRef = useRef<HTMLDivElement>(null);
     const menuLinksRef = useRef<HTMLDivElement>(null);
@@ -42,7 +44,7 @@ export default function Header() {
                     document.querySelectorAll('.bar').forEach((bar) => {
                         bar.classList.remove('bar-transform-top', 'bar-transform-bottom', 'bar-hidden');
                     });
-                }, 100)
+                }, 100);
             }
         } else {
             setMenuOpen(true);
@@ -86,7 +88,6 @@ export default function Header() {
         }
     }, [menuOpen]);
 
-
     return (
         <div className="header">
             <div className="header__navigation">
@@ -106,7 +107,7 @@ export default function Header() {
                             </svg>
                         </button>
                     </form>
-                    <LogoutButton />
+                    {user && <LogoutButton />}
                 </div>
             </div>
             <div className="menu__navigation">

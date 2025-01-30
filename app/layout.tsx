@@ -1,6 +1,7 @@
 'use client';
 
 import Header from './components/header';
+import { AuthProvider } from '../context/AuthContext';
 
 import './css/main.css';
 import './css/header.css';
@@ -15,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
