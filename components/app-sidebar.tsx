@@ -94,7 +94,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Link href="/">
                 <div className="items-center justify-center rounded-lg">
                   <Image
-                    src="/logo.png" // Path to your image in public folder
+                    src="/Logo.png"
                     alt="Logo"
                     width={26}
                     height={32}
