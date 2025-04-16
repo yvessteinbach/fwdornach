@@ -4,7 +4,7 @@ import React, {
   useState,
   useRef,
   useEffect,
-  ChangeEvent,
+  // ChangeEvent,
   RefObject,
 } from "react";
 
@@ -196,7 +196,7 @@ export default function Creator() {
   // Redraw whenever relevant data changes
   useEffect(() => {
     drawCanvas();
-  }, [einsatznummer, einsatzart, einsatzort, datum, uhrzeit, einsatztrupp, refreshCanvas]);
+  }, [einsatznummer, einsatzart, einsatzort, datum, uhrzeit, einsatztrupp, refreshCanvas, drawCanvas]);
 
   // Download as PNG
   const handleDownload = () => {
