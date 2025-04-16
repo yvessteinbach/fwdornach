@@ -3,15 +3,6 @@ import "./globals.css";
 
 import { AppSidebar } from "@/components/app-sidebar"
 import {
-  // Breadcrumb,
-  // BreadcrumbItem,
-  // BreadcrumbLink,
-  // BreadcrumbList,
-  // BreadcrumbPage,
-  // BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-// import { Separator } from "@/components/ui/separator"
-import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
@@ -54,11 +45,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-// Breadcrumb,
-// BreadcrumbItem,
-// BreadcrumbLink,
-// BreadcrumbList,
-// BreadcrumbPage,
-// BreadcrumbSeparator,
-// import { Separator } from "@/components/ui/separator"
