@@ -4,6 +4,7 @@ import React, {
   useState,
   useRef,
   useEffect,
+  useCallback, // Import useCallback
   RefObject,
 } from "react";
 import { useRouter } from 'next/navigation';
@@ -54,18 +55,21 @@ export default function EinsatzCreator() {
   const [logoImage, setLogoImage] = useState<HTMLImageElement | null>(null);
   const [einsatznummerBgImage, setEinsatznummerBgImage] = useState<HTMLImageElement | null>(null);
 
-  function drawMultilineText(
-    ctx: CanvasRenderingContext2D,
-    text: string,
-    x: number,
-    y: number,
-    lineHeight: number
-  ) {
-    const lines = text.split("\n");
-    lines.forEach((line, i) => {
-      ctx.fillText(line, x, y + i * lineHeight);
-    });
-  }
+  const drawMultilineText = useCallback(
+    (
+      ctx: CanvasRenderingContext2D,
+      text: string,
+      x: number,
+      y: number,
+      lineHeight: number
+    ) => {
+      const lines = text.split("\n");
+      lines.forEach((line, i) => {
+        ctx.fillText(line, x, y + i * lineHeight);
+      });
+    },
+    []
+  );
 
   useEffect(() => {
     const logo = new Image();
@@ -87,14 +91,14 @@ export default function EinsatzCreator() {
     return () => { isCancelled = true; };
   }, [background]);
 
-  const getFormattedDate = (rawDate: string): string => {
+  const getFormattedDate = useCallback((rawDate: string): string => {
     if (!rawDate) return "";
     const parsed = new Date(rawDate);
     if (isNaN(parsed.getTime())) return "";
     return new Intl.DateTimeFormat("de-DE", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" }).format(parsed);
-  };
+  }, []);
 
-  const drawCanvas = () => {
+  const drawCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -131,24 +135,24 @@ export default function EinsatzCreator() {
     const einsatzartMaxWidth = canvas.width - 100;
     const einsatzartWords = einsatzart.split(' ');
     let einsatzartCurrentLine = '';
-    const einsatzartYPositionSingleLine = 910; // Fixed Y for single line
-    const einsatzartYPositionMultiLineStart = 840; // Fixed Y for the start of multi-line
+    const einsatzartYPositionSingleLine = 915;
+    const einsatzartYPositionMultiLineStart = 880;
     const einsatzartLineHeight = 70;
     let einsatzartYPosition = einsatzartYPositionSingleLine;
-    let einsatzLineCount = 1;
+    let einsatzartLineCount = 1;
 
     einsatzartWords.forEach((word, index) => {
       const testLine = einsatzartCurrentLine ? `${einsatzartCurrentLine} ${word}` : word;
       const metrics = ctx.measureText(testLine);
 
       if (metrics.width > einsatzartMaxWidth && einsatzartCurrentLine) {
-        if (einsatzLineCount === 1) {
-          einsatzartYPosition = einsatzartYPositionMultiLineStart; // Adjust to multi-line start
+        if (einsatzartLineCount === 1) {
+          einsatzartYPosition = einsatzartYPositionMultiLineStart;
         }
         fillTextNoLigatures(ctx, einsatzartCurrentLine, 50, einsatzartYPosition);
         einsatzartCurrentLine = word;
         einsatzartYPosition += einsatzartLineHeight;
-        einsatzLineCount++;
+        einsatzartLineCount++;
       } else {
         einsatzartCurrentLine = testLine;
       }
@@ -175,24 +179,24 @@ export default function EinsatzCreator() {
       const y = canvas.height - logoHeight - 50;
       ctx.drawImage(logoImage, x, y, logoWidth, logoHeight);
     }
-  };
+  }, [canvasRef, backgroundImage, einsatznummerBgImage, logoImage, einsatznummer, einsatzart, einsatzort, datum, uhrzeit, einsatztrupp, drawMultilineText, getFormattedDate]); // Add dependencies of drawCanvas
 
-  function fillTextNoLigatures(
+  const fillTextNoLigatures = useCallback((
     ctx: CanvasRenderingContext2D,
     text: string,
     x: number,
     y: number
-  ): void {
+  ): void => {
     let currentX = x;
     for (const char of text) {
       ctx.fillText(char, currentX, y);
       currentX += ctx.measureText(char).width;
     }
-  }
+  }, []);
 
   useEffect(() => {
     drawCanvas();
-  }, [einsatznummer, einsatzart, einsatzort, datum, uhrzeit, einsatztrupp, refreshCanvas, backgroundImage, einsatznummerBgImage, logoImage]);
+  }, [einsatznummer, einsatzart, einsatzort, datum, uhrzeit, einsatztrupp, refreshCanvas, backgroundImage, einsatznummerBgImage, logoImage, drawCanvas]);
 
   const handleDownloadAndSave = async () => {
     const canvas = canvasRef.current;
