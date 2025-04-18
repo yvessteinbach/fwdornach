@@ -5,349 +5,273 @@ import React, {
   useRef,
   useEffect,
   RefObject,
+  ChangeEvent,
 } from "react";
+import { useRouter } from 'next/navigation';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase'; // Import the database instance
 
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
-export default function Creator() {
-  
-  // Form states
-  const [einsatznummer, setEinsatznummer] = useState<string>("");
-  const [einsatzart, setEinsatzart] = useState<string>("");
-  const [einsatzort, setEinsatzort] = useState<string>("");
+const uebungenCollection = collection(db, 'uebungen');
+
+export default function UebungCreator() {
+  const router = useRouter();
+  const canvasRef: RefObject<HTMLCanvasElement | null> = useRef<HTMLCanvasElement | null>(null);
+  const [impressionenText, setImpressionenText] = useState<string>("");
   const [datum, setDatum] = useState<string>("");
-  const [uhrzeit, setUhrzeit] = useState<string>("");
-  const [einsatztrupp, setEinsatztrupp] = useState<string>("");
-
-  function drawMultilineText(
-    ctx: CanvasRenderingContext2D,
-    text: string,
-    x: number,
-    y: number,
-    lineHeight: number
-  ) {
-    // Split on actual newline characters. If your input is literally “\\n”,
-    // use text.split("\\n") instead.
-    const lines = text.split("\n");
-  
-    lines.forEach((line, i) => {
-      ctx.fillText(line, x, y + i * lineHeight);
-    });
-  }
-
   const [refreshCanvas, setRefreshCanvas] = useState(false);
-
-  const [background, setSelectedBg] = useState("/images/kowa.png");
+  const [background, setSelectedBg] = useState<string | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<HTMLImageElement | null>(null);
-
-  // Fixed images for logo and einsatznummer background
   const [logoImage, setLogoImage] = useState<HTMLImageElement | null>(null);
-  const [einsatznummerBgImage, setEinsatznummerBgImage] =
-    useState<HTMLImageElement | null>(null);
 
-  // Canvas ref
-  const canvasRef: RefObject<HTMLCanvasElement | null> =
-    useRef<HTMLCanvasElement | null>(null);
-
-  // Load the fixed images (logo & einsatznummer background)
   useEffect(() => {
     const logo = new Image();
-    logo.src = "/images/Logo.png";
-    logo.onload = () => {
-      console.log("Logo image loaded successfully");
-      setLogoImage(logo);
-    };
-    logo.onerror = (e) => {
-      console.error("Error loading logo image:", e);
-    };
+    logo.src = "/Logo.png";
+    logo.onload = () => setLogoImage(logo);
 
-    const einsatznummerBg = new Image();
-    einsatznummerBg.src = "/images/Einsatznummer_bg.png";
-    einsatznummerBg.onload = () => {
-      console.log("Einsatznummer background image loaded successfully");
-      setEinsatznummerBgImage(einsatznummerBg);
-    };
-    einsatznummerBg.onerror = (e) => {
-      console.error("Error loading einsatznummer background image:", e);
-    };
-    
     let isCancelled = false;
-
-  if (!background) return; // Ensure a background is selected
-
-  const bg = new Image();
-  bg.src = background;
-
-  bg.onload = () => {
-    if (!isCancelled) setBackgroundImage(bg);
-  };
-
-  bg.onerror = (e) => {
-    console.error("Error loading background image:", e);
-  };
-
-  return () => {
-    isCancelled = true;
-  };
+    if (!background) {
+      setBackgroundImage(null);
+      return;
+    }
+    const bg = new Image();
+    bg.src = background;
+    bg.onload = () => {
+      if (!isCancelled) setBackgroundImage(bg);
+    };
+    return () => {
+      isCancelled = true;
+    };
   }, [background]);
 
-  // Format date like "Dienstag, 01.04.2025"
   const getFormattedDate = (rawDate: string): string => {
     if (!rawDate) return "";
     const parsed = new Date(rawDate);
     if (isNaN(parsed.getTime())) return "";
-
-    return new Intl.DateTimeFormat("de-DE", {
-      weekday: "long",
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }).format(parsed);
+    return new Intl.DateTimeFormat("de-DE", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" }).format(parsed);
   };
 
-  // Draw everything on the canvas
+  const handleBackgroundUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setSelectedBg(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
+
   const drawCanvas = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Clear old content
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // White background
     ctx.fillStyle = "#202020";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw main background
     if (backgroundImage) {
-      ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-    }
+      const imageAspectRatio = backgroundImage.width / backgroundImage.height;
+      const canvasAspectRatio = canvas.width / canvas.height;
+      let sourceX = 0;
+      let sourceY = 0;
+      let sourceWidth = backgroundImage.width;
+      let sourceHeight = backgroundImage.height;
+      let destX = 0;
+      let destY = 0;
+      let destWidth = canvas.width;
+      let destHeight = canvas.height;
 
-    // Fixed top-left title
-    ctx.font = "150px StretchPro";
-    ctx.fillStyle = "#FFF";
-    drawMultilineText(ctx, "EIN- \nSATZ", 50, 160, 120);
-
-    // Draw the einsatznummer background behind the text
-    // Example: place it near top-right
-    if (einsatznummerBgImage) {
-      // x=700, y=20, sized to 300x100
-      ctx.drawImage(einsatznummerBgImage, 850, 80, 180, 180);
-    }
-
-    // Different font for “Einsatznummer” + “Einsatzart”
-    ctx.font = "32px Stretchpro";
-    ctx.fillStyle = "#FFF";
-    const textWithBreak = `Nr. \n${einsatznummer}`;
-    const lines = textWithBreak.split('\n');
-
-    lines.forEach((line, i) => {
-      ctx.fillText(line, 910, 170 + i * 50);
-    });
-
-    /**
-     * Draw text, one character at a time, to avoid ligatures.
-     * @param ctx - The canvas 2D context
-     * @param text - The text to draw
-     * @param x - Starting x-coordinate
-     * @param y - Y-coordinate (unchanged for each char)
-     */
-    function fillTextNoLigatures(
-      ctx: CanvasRenderingContext2D,
-      text: string,
-      x: number,
-      y: number
-    ): void {
-      let currentX = x;
-      for (const char of text) {
-        ctx.fillText(char, currentX, y);
-        currentX += ctx.measureText(char).width;
+      if (imageAspectRatio > canvasAspectRatio) {
+        sourceWidth = backgroundImage.height * canvasAspectRatio;
+        sourceX = (backgroundImage.width - sourceWidth) / 2;
+      } else {
+        sourceHeight = backgroundImage.width / canvasAspectRatio;
+        sourceY = (backgroundImage.height - sourceHeight) / 2;
       }
+
+      ctx.drawImage(backgroundImage, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
     }
-    ctx.font = "72px Stretchpro";
+
+    ctx.font = "72px StretchPro";
     ctx.fillStyle = "#FFF";
     ctx.fontKerning = "none";
-    fillTextNoLigatures(ctx, einsatzart, 50, 915  );
+    const maxLines = 3;
+    const lines = impressionenText.split('\n').slice(0, maxLines);
+    const lineHeight = 70;
+    let currentY = canvas.height - 70 - (lines.length - 1) * lineHeight;
+    const impressionLines: string[] = [];
+    lines.forEach((line) => {
+      let currentX = 50;
+      let drawnLine = "";
+      for (const char of line) {
+        const testWidth = ctx.measureText(drawnLine + char).width;
+        if (testWidth <= canvas.width - 100) {
+          ctx.fillText(char, currentX, currentY);
+          currentX += ctx.measureText(char).width;
+          drawnLine += char;
+        } else {
+          break;
+        }
+      }
+      impressionLines.push(drawnLine);
+      currentY += lineHeight;
+    });
 
-    // Normal font for the rest
-    ctx.font = "bold 42px sans-serif";
     ctx.fillStyle = "#FFF";
+    const labelText = "IMPRESSIONEN";
+    const labelFont = "bold 26px sans-serif";
+    ctx.font = labelFont;
+    const labelWidth = ctx.measureText(labelText).width;
+    const labelHeight = 18;
+    const labelBgPadding = 24;
+    const labelBgRadius = 16;
+    const labelBgX = 74 - labelBgPadding;
+    const labelBgY = canvas.height - 130 - (impressionLines.length * 70) - labelBgPadding;
+    const labelBgWidth = labelWidth + 2 * labelBgPadding + 60;
+    const labelBgHeight = labelHeight + 2 * labelBgPadding;
+    const labelTextX = labelBgX + labelBgPadding;
+    const labelTextY = labelBgY + labelBgPadding + labelHeight;
 
+    ctx.beginPath();
+    ctx.roundRect(labelBgX, labelBgY, labelBgWidth, labelBgHeight, labelBgRadius);
+    ctx.fill();
+
+    ctx.fillStyle = "#202020";
+    ctx.fillText(labelText, labelTextX, labelTextY);
+
+    const chevronY = labelTextY - 1;
+    const chevronStartX = labelBgX + labelBgWidth - 10 - (6 * 10);
+
+    ctx.font = "40px sans-serif";
+    ctx.globalAlpha = 1;
+    ctx.fillText("›", chevronStartX, chevronY);
+    ctx.globalAlpha = 0.7;
+    ctx.fillText("›", chevronStartX + 20, chevronY);
+    ctx.globalAlpha = 0.3;
+    ctx.fillText("›", chevronStartX + 40, chevronY);
+    ctx.globalAlpha = 1;
+
+    ctx.fillStyle = "#FFF";
     const formattedDate = getFormattedDate(datum);
+    const dateFont = "bold 26px sans-serif";
+    ctx.font = dateFont;
+    const dateWidth = ctx.measureText(formattedDate).width;
+    const dateHeight = 26;
+    const dateBgPadding = 16;
+    const dateBgRadius = 16;
+    const dateBgX = canvas.width - dateWidth - 50 - dateBgPadding;
+    const dateBgY = 70 - dateBgPadding;
+    const dateBgWidth = dateWidth + 2 * dateBgPadding;
+    const dateBgHeight = dateHeight + 2 * dateBgPadding;
+    const dateTextX = dateBgX + dateBgWidth / 2 - dateWidth / 2;
+    const dateTextY = dateBgY + dateBgHeight / 2 + dateHeight / 2 - 2;
 
-    // Choose positions for these
-    ctx.fillText(`🌎 ${einsatzort}`, 50, 1000);
-    ctx.fillText(`📅 ${formattedDate}`, 50, 1075);
-    ctx.fillText(`🕑 ${uhrzeit}`, 50, 1150);
-    ctx.fillText(`👨‍🚒 ${einsatztrupp}`, 50, 1225);
+    ctx.beginPath();
+    ctx.roundRect(dateBgX, dateBgY, dateBgWidth, dateBgHeight, dateBgRadius);
+    ctx.fill();
 
-    // Draw the fixed logo in bottom-right corner
+    ctx.fillStyle = "#202020";
+    ctx.fillText(formattedDate, dateTextX, dateTextY);
+
     if (logoImage) {
-      const logoWidth = 160;  // scale as needed
-      const logoHeight = 200; // scale as needed
-      const x = canvas.width - logoWidth - 70;
-      const y = canvas.height - logoHeight - 50;
-      ctx.drawImage(logoImage, x, y, logoWidth, logoHeight);
+      const logoWidth = 160;
+      const logoHeight = 200;
+      ctx.drawImage(logoImage, 50, 50, logoWidth, logoHeight);
     }
   };
 
-  // Redraw whenever relevant data changes
   useEffect(() => {
     drawCanvas();
-  }, [einsatznummer, einsatzart, einsatzort, datum, uhrzeit, einsatztrupp, refreshCanvas]);
+  }, [impressionenText, datum, refreshCanvas, background, backgroundImage, logoImage]);
 
-  // Download as PNG
-  const handleDownload = () => {
+  const handleDownloadAndSave = async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const dataURL = canvas.toDataURL("image/png");
+    const filename = "uebung_impressionen.png";
+
+    try {
+      await addDoc(uebungenCollection, {
+        impressionenText: impressionenText,
+        datum: datum,
+        imageUrl: dataURL,
+        createdAt: new Date(),
+      });
+      console.log("Uebung data saved to Firebase!");
+    } catch (error) {
+      console.error("Error saving uebung data to Firebase:", error);
+      // Optionally display an error message to the user
+    }
+
+    // Download the image
     const link = document.createElement("a");
     link.href = dataURL;
-    link.download = "instagram_post.png";
+    link.download = filename;
+    document.body.appendChild(link); // Required for Firefox
     link.click();
+    document.body.removeChild(link);
+
+    // Redirect to /dashboard/(uebung) page
+    router.push('/dashboard/uebung');
   };
 
   return (
-    <div style={styles.container}>
-
-      <form style={styles.form}>
-        <div style={styles.field}>
-          <label style={styles.label}>Einsatznummer:</label>
-          <input
-            style={styles.input}
-            type="text"
-            placeholder="Einsatznummer"
-            value={einsatznummer}
-            onChange={(e) => setEinsatznummer(e.target.value)}
+    <div className="relative h-fit flex flex-col max-w-2xl mx-8">
+      <form className="flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-2">
+          <Label>Übungstitel:</Label>
+          <Textarea
+            placeholder="Übungstitel eingeben"
+            value={impressionenText}
+            onChange={(e) => setImpressionenText(e.target.value)}
+            rows={3}
           />
         </div>
 
-        <div style={styles.field}>
-          <label style={styles.label}>Einsatzart:</label>
-          <select
-            style={styles.input}
-            value={einsatzart}
-            onChange={(e) => setEinsatzart(e.target.value)}
-          >
-            <option value="">Einsatzart auswählen</option>
-            <option value="Gebäudebrand">Gebäudebrand</option>
-            <option value="Fahrzeugbrand">Fahrzeugbrand</option>
-            <option value="Wald- und Flurbrand">Wald- und Flurbrand</option>
-            <option value="Personenrettung">Personenrettung</option>
-            <option value="Notfallrettungsdienst">Notfallrettungsdienst</option>
-            <option value="Elemtarereignis">Elemtarereignis</option>
-            <option value="C-Ereignis">C-Ereignis</option>
-            <option value="BC-Ereignis">BC-Ereignis</option>
-            <option value="A-Ereignis">A-Ereignis</option>
-            <option value="Ölspur">Ölspur</option>
-            <option value="Pioniereinsatz">Pioniereinsatz</option>
-            <option value="Technische Hilfeleistung">Technische Hilfeleistung</option>
-            <option value="Hilfeleistung Sanität">Hilfeleistung Sanität</option>
-            <option value="Bienen/Wespen">Bienen/Wespen</option>
-            <option value="Brandmeldeanlage">Brandmeldeanlage</option>
-            <option value="Falschalarm">Falschalarm</option>
-            <option value="Diverse Einsätze">Diverse Einsätze</option>
-            <option value="Verkehrsregelung">Verkehrsregelung</option>
-            <option value="SAALWACHE">Saalwache</option>
-          </select>
-        </div>
-
-        <div style={styles.field}>
-          <label style={styles.label}>Einsatzort:</label>
-          <select
-            style={styles.input}
-            value={einsatzort}
-            onChange={(e) => setEinsatzort(e.target.value)}
-          >
-            <option value="">Einsatzort auswählen</option>
-            <option value="Dornach">Dornach</option>
-            <option value="Hochwald">Hochwald</option>
-            <option value="Seewen">Seewen</option>
-            <option value="Gempen">Gempen</option>
-          </select>
-        </div>
-
-        <div style={styles.field}>
-          <label style={styles.label}>Datum:</label>
-          <input
-            style={styles.input}
+        <div className="w-full flex flex-col gap-2">
+          <Label>Datum:</Label>
+          <Input
+            className="py-2 px-3 border rounded text-lg font-sans"
             type="date"
             value={datum}
             onChange={(e) => setDatum(e.target.value)}
           />
         </div>
 
-        <div style={styles.field}>
-          <label style={styles.label}>Uhrzeit:</label>
-          <input
-            style={styles.input}
-            type="time"
-            value={uhrzeit}
-            onChange={(e) => setUhrzeit(e.target.value)}
+        <div className="w-full flex flex-col gap-2">
+          <Label>Hintergrund hochladen:</Label>
+          <Input
+            className="py-2 px-3 border rounded text-lg font-sans"
+            type="file"
+            accept="image/*"
+            onChange={handleBackgroundUpload}
           />
-        </div>
-
-        <div style={styles.field}>
-          <label style={styles.label}>Einsatztrupp:</label>
-          <input
-            style={styles.input}
-            type="text"
-            placeholder="Einsatztrupp"
-            value={einsatztrupp}
-            onChange={(e) => setEinsatztrupp(e.target.value)}
-          />
-        </div>
-
-        <div style={styles.field}>
-          <label style={styles.label}>Hintergrund auswählen:</label>
-            <select
-              style={styles.input}
-              defaultValue="/images/kowa.png"
-              onChange={(e) => setSelectedBg(e.target.value)}
-            >
-            <option value="">Hintergrund auswählen</option>
-            <option value="/images/kowa.png">KOWA</option>
-            <option value="/images/adl.png">ADL</option>
-            <option value="/images/tlf.png">TLF</option>
-            <option value="/images/rfz.png">RFZ</option>
-            <option value="/images/vrf.png">VRF</option>
-            <option value="/images/mtf.png">MTF</option>
-          </select>
         </div>
       </form>
 
-      <div className="creator__wrapper">
+      <div className="w-full my-4">
         <canvas
           ref={canvasRef}
           width={1080}
           height={1280}
-          style={styles.canvas}
+          className="border block w-full h-auto"
         />
       </div>
 
-      <button onClick={() => setRefreshCanvas(prev => !prev)}>
-        Aktualisieren
-      </button>
-
-      <button onClick={handleDownload}>
-        Download als PNG
-      </button>
+      <div className="w-full flex flex-col gap-4 my-4">
+        <Button className="py-6" variant="secondary" onClick={() => setRefreshCanvas(prev => !prev)}>
+          Aktualisieren
+        </Button>
+        <Button className="py-6" onClick={handleDownloadAndSave}>
+          Exportieren und Speichern
+        </Button>
+      </div>
     </div>
   );
 }
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    padding: "20px",
-    maxWidth: "600px",
-    margin: "0 auto",
-  },
-  canvas: {
-    border: "1px solid #ccc",
-    display: "block",
-    width: "100%", // Let the canvas scale to the container width
-    height: "auto", // Maintain aspect ratio
-  }
-};

@@ -38,15 +38,15 @@ const data = {
       items: [
         {
           title: "Alle Einsätze",
-          url: "/einsatz/",
+          url: "/dashboard/einsatz",
         },
         {
           title: "Einsatz erstellen",
-          url: "/einsatz/erstellen/",
+          url: "/dashboard/einsatz/erstellen",
         },
         {
           title: "Statistiken",
-          url: "/einsatz/statistik/",
+          url: "/dashboard/einsatz/statistik",
         },
       ],
     },
@@ -57,15 +57,15 @@ const data = {
       items: [
         {
           title: "Alle Übungen",
-          url: "/uebung/",
+          url: "/dashboard/uebung",
         },
         {
           title: "Übung erstellen",
-          url: "/uebung/erstellen/",
+          url: "/dashboard/uebung/erstellen",
         },
         {
           title: "Statistiken",
-          url: "/uebung/statistik/",
+          url: "/dashboard/uebung/statistik",
         },
       ],
     },
@@ -91,7 +91,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/">
+              <Link href="/dashboard">
                 <div className="items-center justify-center rounded-lg">
                   <Image
                     src="/Logo.png"
@@ -101,7 +101,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   />                
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Social Media Software</span>
+                  <span className="truncate font-medium">Social Media Tool</span>
                   <span className="truncate text-xs">Feuerwehr Dornach</span>
                 </div>
               </Link>
