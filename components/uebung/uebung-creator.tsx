@@ -6,6 +6,7 @@ import React, {
   useEffect,
   RefObject,
   ChangeEvent,
+  useCallback, // Import useCallback
 } from "react";
 import { useRouter } from 'next/navigation';
 import { collection, addDoc } from 'firebase/firestore';
@@ -46,25 +47,25 @@ export default function UebungCreator() {
     return () => {
       isCancelled = true;
     };
-  }, [background]);
+  }, [background, setBackgroundImage, setLogoImage]);
 
-  const getFormattedDate = (rawDate: string): string => {
+  const getFormattedDate = useCallback((rawDate: string): string => {
     if (!rawDate) return "";
     const parsed = new Date(rawDate);
     if (isNaN(parsed.getTime())) return "";
     return new Intl.DateTimeFormat("de-DE", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" }).format(parsed);
-  };
+  }, []);
 
-  const handleBackgroundUpload = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleBackgroundUpload = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => setSelectedBg(reader.result as string);
       reader.readAsDataURL(file);
     }
-  };
+  }, [setSelectedBg]);
 
-  const drawCanvas = () => {
+  const drawCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -183,11 +184,11 @@ export default function UebungCreator() {
       const logoHeight = 200;
       ctx.drawImage(logoImage, 50, 50, logoWidth, logoHeight);
     }
-  };
+  }, [canvasRef, backgroundImage, logoImage, impressionenText, datum, getFormattedDate]);
 
   useEffect(() => {
     drawCanvas();
-  }, [impressionenText, datum, refreshCanvas, background, backgroundImage, logoImage]);
+  }, [impressionenText, datum, refreshCanvas, background, backgroundImage, logoImage, drawCanvas]);
 
   const handleDownloadAndSave = async () => {
     const canvas = canvasRef.current;

@@ -4,7 +4,7 @@ import React, {
   useState,
   useRef,
   useEffect,
-  useCallback, // Import useCallback
+  useCallback,
   RefObject,
 } from "react";
 import { useRouter } from 'next/navigation';
@@ -89,13 +89,26 @@ export default function EinsatzCreator() {
     bg.onload = () => { if (!isCancelled) setBackgroundImage(bg); };
     bg.onerror = (e) => console.error("Error loading background image:", e);
     return () => { isCancelled = true; };
-  }, [background]);
+  }, [background, setBackgroundImage, setLogoImage, setEinsatznummerBgImage]);
 
   const getFormattedDate = useCallback((rawDate: string): string => {
     if (!rawDate) return "";
     const parsed = new Date(rawDate);
     if (isNaN(parsed.getTime())) return "";
     return new Intl.DateTimeFormat("de-DE", { weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" }).format(parsed);
+  }, []);
+
+  const fillTextNoLigatures = useCallback((
+    ctx: CanvasRenderingContext2D,
+    text: string,
+    x: number,
+    y: number
+  ): void => {
+    let currentX = x;
+    for (const char of text) {
+      ctx.fillText(char, currentX, y);
+      currentX += ctx.measureText(char).width;
+    }
   }, []);
 
   const drawCanvas = useCallback(() => {
@@ -179,20 +192,7 @@ export default function EinsatzCreator() {
       const y = canvas.height - logoHeight - 50;
       ctx.drawImage(logoImage, x, y, logoWidth, logoHeight);
     }
-  }, [canvasRef, backgroundImage, einsatznummerBgImage, logoImage, einsatznummer, einsatzart, einsatzort, datum, uhrzeit, einsatztrupp, drawMultilineText, getFormattedDate]); // Add dependencies of drawCanvas
-
-  const fillTextNoLigatures = useCallback((
-    ctx: CanvasRenderingContext2D,
-    text: string,
-    x: number,
-    y: number
-  ): void => {
-    let currentX = x;
-    for (const char of text) {
-      ctx.fillText(char, currentX, y);
-      currentX += ctx.measureText(char).width;
-    }
-  }, []);
+  }, [canvasRef, backgroundImage, einsatznummerBgImage, logoImage, einsatznummer, einsatzart, einsatzort, datum, uhrzeit, einsatztrupp, drawMultilineText, getFormattedDate, fillTextNoLigatures]);
 
   useEffect(() => {
     drawCanvas();
